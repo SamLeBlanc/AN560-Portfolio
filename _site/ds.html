@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>AN560 - Data Sources</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AN560</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./me.html">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./intro.html">
+ <span class="menu-text">Introduction</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./ds.html" aria-current="page">
+ <span class="menu-text">Data Sources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./dv.html">
+ <span class="menu-text">Data Visualizations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./eda.html">
+ <span class="menu-text">Exploratory Data Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./arma.html">
+ <span class="menu-text">ARMA/ARIMA/SARIMA Models</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./saf.html">
+ <span class="menu-text">Spectral Analysis and Filtering</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./ftsm.html">
+ <span class="menu-text">Financial Time Series Models</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./dl.html">
+ <span class="menu-text">Deep Learning for TS</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./conc.html">
+ <span class="menu-text">Conclusions</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#global-monitoring-laboratory-at-noaa" id="toc-global-monitoring-laboratory-at-noaa" class="nav-link active" data-scroll-target="#global-monitoring-laboratory-at-noaa">Global Monitoring Laboratory at NOAA</a></li>
+  <li><a href="#environmental-protection-agency-epa-greenhouse-gas-reporting-program-ghgrp" id="toc-environmental-protection-agency-epa-greenhouse-gas-reporting-program-ghgrp" class="nav-link" data-scroll-target="#environmental-protection-agency-epa-greenhouse-gas-reporting-program-ghgrp">Environmental Protection Agency (EPA): Greenhouse Gas Reporting Program (GHGRP)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Sources</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+
+</div>
+<section id="global-monitoring-laboratory-at-noaa" class="level3">
+<h3 class="anchored" data-anchor-id="global-monitoring-laboratory-at-noaa"><a href="https://gml.noaa.gov/">Global Monitoring Laboratory</a> at <a href="https://www.noaa.gov/">NOAA</a></h3>
+<p>In the world of monitoring of atmospheric concentrations of greenhouses gases, the National Oceanic and Atmospheric Administration (NOAA) is the main player.</p>
+<p>Due to its size and scope, NOAA includes atmospheric monitoring in many of its departments. For this project I will be using data from the Global Monitoring Laboratory (GML), which is part of the Earth System Research Laboratories project. The Laboratory is one of the most important research facilities currently in existence, as it is responsible for the collection and analysis of important data about the atmosphere, climate, and the ocean. The Global Monitoring Laboratory offers a number of benefits to the scientific community, including access to a vast array of data, the ability to conduct research on a global scale, and the ability to share research results with other scientists around the world. As part of its research, the GML provides data on the atmospheric content of four prominent greenhouse gasses, carbon dioxide (CO<sub>2</sub>), methane (CH<sub>4</sub>), nitrous oxide (N<sub>2</sub>O), and sulfur hexafluoride (SF<sub>6</sub>).</p>
+<p>The links to the data sets can be found on the <a href="https://gml.noaa.gov/ccgg/trends/">Trends</a> section of the GML website. The data sets are also linked as text files below:</p>
+<p><a href="https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.txt">Carbon Dioxide (CO<sub>2</sub>)</a></p>
+<p><a href="https://gml.noaa.gov/webdata/ccgg/trends/ch4/ch4_mm_gl.txt">Methane (CH<sub>4</sub>)</a></p>
+<p><a href="https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.txt">Nitrous Oxide (N<sub>2</sub>O)</a></p>
+<p><a href="https://gml.noaa.gov/webdata/ccgg/trends/sf6/sf6_mm_gl.txt">Sulfur Hexafluoride (SF<sub>6</sub>)</a></p>
+<section id="data-exploration" class="level4">
+<h4 class="anchored" data-anchor-id="data-exploration">Data Exploration</h4>
+</section>
+</section>
+<section id="environmental-protection-agency-epa-greenhouse-gas-reporting-program-ghgrp" class="level2">
+<h2 class="anchored" data-anchor-id="environmental-protection-agency-epa-greenhouse-gas-reporting-program-ghgrp">Environmental Protection Agency (EPA): <a href="https://www.epa.gov/ghgreporting/data-sets">Greenhouse Gas Reporting Program (GHGRP)</a></h2>
+<p>The Environmental Protection Agency’s Greenhouse Gas Reporting Program is a critical tool in the fight against climate change. The program provides a comprehensive overview of emissions data from across the country, helping to inform policy decisions and identify areas that need additional attention. The data collected helps the EPA track trends in emissions levels and can be used to inform strategies for reducing greenhouse gas emissions. With the help of this program, the EPA is able to create an effective response to the ever-changing environmental conditions and ensure a sustainable future for the planet.</p>
+<p>The data can be accessed at the <a href="https://www.epa.gov/ghgreporting/data-sets">Data Sets</a> section of the GHGRP website.They are stored in a zip file containing data over the last decade. The most interesting data set from the EPA is the record of large polluters. I think it could be very interesting to use this to gauge how station proximity to large emitters effects the amplitude of seasonal cycles.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
