@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>AN560 - Financial Time Series Models (ARCH/GARCH)</title>
+<title>AN560: Sam LeBlanc - Financial Time Series Models (ARCH/GARCH)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,12 +87,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./sunspot.html" rel="next">
+<link href="./arimax.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -103,11 +104,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 20,
   "language": {
     "search-no-results-text": "No results",
@@ -124,82 +125,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">AN560</span>
-    </a>
-  </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html">
- <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./me.html">
- <span class="menu-text">About Me</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./intro.html">
- <span class="menu-text">Introduction</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./ds.html">
- <span class="menu-text">Data Sources</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./dv.html">
- <span class="menu-text">Data Visualizations</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./eda.html">
- <span class="menu-text">Exploratory Data Analysis</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./arma.html">
- <span class="menu-text">ARMA/ARIMA/SARIMA Models</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./arimax.html">
- <span class="menu-text">ARIMAX/SARIMAX/VAR</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./saf.html">
- <span class="menu-text">Spectral Analysis and Filtering</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./ftsm.html" aria-current="page">
- <span class="menu-text">Financial Time Series Models (ARCH/GARCH)</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./dl.html">
- <span class="menu-text">Deep Learning for TS</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./conc.html">
- <span class="menu-text">Conclusions</span></a>
-  </li>  
-</ul>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Financial Time Series Models (ARCH/GARCH)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/gg.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./me.html" class="sidebar-item-text sidebar-link">About Me</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ds.html" class="sidebar-item-text sidebar-link">Data Sources</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dv.html" class="sidebar-item-text sidebar-link">Data Visualizations</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">Exploratory Data Analysis</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arma.html" class="sidebar-item-text sidebar-link">ARMA/ARIMA/SARIMA Models</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arimax.html" class="sidebar-item-text sidebar-link">ARIMAX/SARIMAX/VAR</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ftsm.html" class="sidebar-item-text sidebar-link active">Financial Time Series Models (ARCH/GARCH)</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sunspot.html" class="sidebar-item-text sidebar-link">Deep Learning for TS</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conc.html" class="sidebar-item-text sidebar-link">Conclusions</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -227,7 +231,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Financial Time Series Models (ARCH/GARCH)</h1>
+<h1 class="title d-none d-lg-block">Financial Time Series Models (ARCH/GARCH)</h1>
 </div>
 
 
@@ -305,7 +309,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     ARCH LM-test; Null hypothesis: no ARCH effects
 
 data:  returns
-Chi-squared = 50.302, df = 1, p-value = 1.318e-12</code></pre>
+Chi-squared = 50.596, df = 1, p-value = 1.135e-12</code></pre>
 </div>
 </div>
 </section>
@@ -340,30 +344,30 @@ Chi-squared = 50.302, df = 1, p-value = 1.318e-12</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>output</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   p d q       AIC       BIC      AICc
-1  0 1 0 -4005.528 -4000.213 -4005.525
-2  0 1 1 -4005.178 -3994.549 -4005.170
-3  0 1 2 -4003.518 -3987.575 -4003.502
-4  0 1 3 -4002.503 -3981.245 -4002.476
-5  0 1 4 -4004.138 -3977.565 -4004.098
-6  1 1 0 -4005.221 -3994.592 -4005.213
-7  1 1 1 -4003.264 -3987.320 -4003.248
-8  1 1 2 -4001.615 -3980.357 -4001.589
-9  1 1 3 -4001.887 -3975.315 -4001.847
-10 1 1 4 -4002.156 -3970.269 -4002.100
-11 2 1 0 -4003.415 -3987.471 -4003.399
-12 2 1 1 -4001.235 -3979.977 -4001.208
-13 2 1 2 -4010.677 -3984.104 -4010.637
-14 2 1 3 -4006.893 -3975.005 -4006.836
-15 2 1 4 -4007.851 -3970.649 -4007.776
-16 3 1 0 -4002.768 -3981.510 -4002.741
-17 3 1 1 -4002.261 -3975.689 -4002.221
-18 3 1 2 -4000.597 -3968.709 -4000.540
-19 3 1 3 -3998.716 -3961.514 -3998.641
-20 3 1 4 -3998.351 -3955.835 -3998.255
-21 4 1 0 -4004.323 -3977.750 -4004.282
-22 4 1 1 -4002.332 -3970.444 -4002.276
-23 4 1 2 -4000.452 -3963.250 -4000.377
-24 4 1 3 -3998.516 -3956.000 -3998.419</code></pre>
+1  0 1 0 -4029.563 -4024.244 -4029.561
+2  0 1 1 -4029.215 -4018.576 -4029.207
+3  0 1 2 -4027.552 -4011.592 -4027.536
+4  0 1 3 -4026.393 -4005.113 -4026.366
+5  0 1 4 -4027.981 -4001.382 -4027.941
+6  1 1 0 -4029.258 -4018.618 -4029.250
+7  1 1 1 -4027.303 -4011.343 -4027.287
+8  1 1 2 -4025.635 -4004.355 -4025.608
+9  1 1 3 -4025.688 -3999.089 -4025.648
+10 1 1 4 -4026.002 -3994.083 -4025.946
+11 2 1 0 -4027.454 -4011.494 -4027.438
+12 2 1 1 -4025.262 -4003.983 -4025.236
+13 2 1 2 -4034.277 -4007.678 -4034.237
+14 2 1 3 -4026.394 -3994.475 -4026.338
+15 2 1 4 -4024.224 -3986.985 -4024.149
+16 3 1 0 -4026.635 -4005.355 -4026.608
+17 3 1 1 -4026.035 -3999.436 -4025.995
+18 3 1 2 -4024.603 -3992.684 -4024.547
+19 3 1 3 -4022.766 -3985.527 -4022.691
+20 3 1 4 -4022.240 -3979.681 -4022.144
+21 4 1 0 -4028.141 -4001.541 -4028.101
+22 4 1 1 -4026.153 -3994.233 -4026.097
+23 4 1 2 -4024.293 -3987.054 -4024.219
+24 4 1 3 -4022.402 -3979.843 -4022.306</code></pre>
 </div>
 </div>
 <p>ARIMA(2,1,2)</p>
@@ -375,11 +379,11 @@ ARIMA(5,2,0)
 
 Coefficients:
           ar1      ar2      ar3      ar4      ar5
-      -0.7912  -0.6063  -0.4740  -0.3628  -0.1888
-s.e.   0.0254   0.0312   0.0328   0.0313   0.0254
+      -0.7921  -0.6080  -0.4742  -0.3629  -0.1890
+s.e.   0.0253   0.0311   0.0327   0.0312   0.0254
 
-sigma^2 = 0.004765:  log likelihood = 1884.66
-AIC=-3757.31   AICc=-3757.26   BIC=-3725.43</code></pre>
+sigma^2 = 0.004752:  log likelihood = 1896.75
+AIC=-3781.5   AICc=-3781.44   BIC=-3749.58</code></pre>
 </div>
 </div>
 <p>Using the <code>auto.arima</code> function, we can see the the best model is the ARIMA(5,2,0). But the ACF and PACF does not suggest these are good values. Since the auto arima function is sometimes un-trsutworthy, I am still going to go with the (2,1,2) ARIMA as determined by the manual arima model selection.</p>
@@ -425,7 +429,7 @@ AIC=-3757.31   AICc=-3757.26   BIC=-3725.43</code></pre>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>GARCH_AIC <span class="ot">=</span> <span class="fu">sapply</span>(model, AIC) <span class="do">## model with lowest AIC is the best</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(GARCH_AIC <span class="sc">==</span> <span class="fu">min</span>(GARCH_AIC))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1</code></pre>
+<pre><code>[1] 2</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model[[<span class="fu">which</span>(GARCH_AIC <span class="sc">==</span> <span class="fu">min</span>(GARCH_AIC))]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -434,8 +438,8 @@ Call:
 garch(x = arima.res, order = c(q, p), trace = F)
 
 Coefficient(s):
-       a0         a1         b1  
-1.186e-05  5.537e-02  9.449e-01  </code></pre>
+       a0         a1         b1         b2  
+1.774e-05  8.952e-02  3.755e-01  5.358e-01  </code></pre>
 </div>
 </div>
 <p>After trying all p,q values from 0,4 in combination, the GARCH(1,2) model is the best and has the lowest combination of AIC and BIC models. I tested all of the models, but only included the output from the best one. I attempted to use cross validation but was unsuccessful in making comparisons between the different models.</p>
@@ -451,7 +455,7 @@ Call:
 
 Mean and Variance Equation:
  data ~ garch(1, 2)
-&lt;environment: 0x000002ab90b57720&gt;
+&lt;environment: 0x000001971d76a758&gt;
  [data = arima.res]
 
 Conditional Distribution:
@@ -459,43 +463,43 @@ Conditional Distribution:
 
 Coefficient(s):
         mu       omega      alpha1       beta1       beta2  
-0.00010064  0.00001667  0.08827887  0.37861131  0.53446470  
+3.2701e-04  1.7583e-05  8.9457e-02  3.7710e-01  5.3440e-01  
 
 Std. Errors:
  based on Hessian 
 
 Error Analysis:
         Estimate  Std. Error  t value Pr(&gt;|t|)    
-mu     1.006e-04   1.108e-03    0.091 0.927623    
-omega  1.667e-05   8.485e-06    1.965 0.049455 *  
-alpha1 8.828e-02   1.506e-02    5.862 4.57e-09 ***
-beta1  3.786e-01   1.463e-01    2.588 0.009665 ** 
-beta2  5.345e-01   1.383e-01    3.865 0.000111 ***
+mu     3.270e-04   1.106e-03    0.296  0.76749    
+omega  1.758e-05   8.715e-06    2.018  0.04363 *  
+alpha1 8.946e-02   1.522e-02    5.876 4.19e-09 ***
+beta1  3.771e-01   1.453e-01    2.595  0.00946 ** 
+beta2  5.344e-01   1.372e-01    3.896 9.79e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Log Likelihood:
- 2299.273    normalized:  1.529789 
+ 2310.996    normalized:  1.529448 
 
 Description:
- Wed Apr 19 22:28:57 2023 by user: sleblanc 
+ Mon May  1 12:44:34 2023 by user: sleblanc 
 
 
 Standardised Residuals Tests:
                                 Statistic p-Value  
- Jarque-Bera Test   R    Chi^2  1384.355  0        
- Shapiro-Wilk Test  R    W      0.9548813 0        
- Ljung-Box Test     R    Q(10)  12.36367  0.2614546
- Ljung-Box Test     R    Q(15)  19.83273  0.1784436
- Ljung-Box Test     R    Q(20)  20.96854  0.3989861
- Ljung-Box Test     R^2  Q(10)  6.105365  0.8063346
- Ljung-Box Test     R^2  Q(15)  10.01006  0.8191064
- Ljung-Box Test     R^2  Q(20)  11.17785  0.9414792
- LM Arch Test       R    TR^2   8.459343  0.7482836
+ Jarque-Bera Test   R    Chi^2  1408.668  0        
+ Shapiro-Wilk Test  R    W      0.9548206 0        
+ Ljung-Box Test     R    Q(10)  12.31858  0.2643006
+ Ljung-Box Test     R    Q(15)  19.50652  0.1916912
+ Ljung-Box Test     R    Q(20)  20.63407  0.4189453
+ Ljung-Box Test     R^2  Q(10)  6.022325  0.8133841
+ Ljung-Box Test     R^2  Q(15)  9.940587  0.8234604
+ Ljung-Box Test     R^2  Q(20)  11.10935  0.9433373
+ LM Arch Test       R    TR^2   8.351932  0.757059 
 
 Information Criterion Statistics:
       AIC       BIC       SIC      HQIC 
--3.052925 -3.035243 -3.052947 -3.046338 </code></pre>
+-3.052277 -3.034671 -3.052299 -3.045721 </code></pre>
 </div>
 </div>
 <p>Since all the models has similar AIC ,BIC values, I would go with GARCH(1,1) which all the coefficients are significant.</p>
@@ -510,18 +514,18 @@ Information Criterion Statistics:
 ARIMA(2,1,2) with drift 
 
 Coefficients:
-         ar1      ar2      ma1     ma2    drift
-      0.8799  -0.9649  -0.8770  0.9866  -0.0001
-s.e.  0.0116   0.0188   0.0076  0.0138   0.0017
+         ar1      ar2      ma1    ma2    drift
+      0.8796  -0.9659  -0.8770  0.987  -0.0003
+s.e.  0.0116   0.0193   0.0078  0.014   0.0017
 
-sigma^2 = 0.004039:  log likelihood = 2010.34
-AIC=-4008.68   AICc=-4008.62   BIC=-3976.79
+sigma^2 = 0.004033:  log likelihood = 2022.16
+AIC=-4032.33   AICc=-4032.27   BIC=-4000.41
 
 Training set error measures:
-                        ME       RMSE        MAE         MPE     MAPE
-Training set -1.006369e-05 0.06342363 0.04145457 -0.02878182 1.233082
-                   MASE       ACF1
-Training set 0.02881042 0.02618756</code></pre>
+                       ME       RMSE        MAE         MPE     MAPE       MASE
+Training set 3.270138e-05 0.06337709 0.04147109 -0.03123005 1.238118 0.02851845
+                   ACF1
+Training set 0.02665098</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -537,7 +541,7 @@ Call:
 
 Mean and Variance Equation:
  data ~ garch(1, 2)
-&lt;environment: 0x000002ab9073f940&gt;
+&lt;environment: 0x000001971f6ebfb0&gt;
  [data = arima.res]
 
 Conditional Distribution:
@@ -545,43 +549,43 @@ Conditional Distribution:
 
 Coefficient(s):
         mu       omega      alpha1       beta1       beta2  
-0.00010064  0.00001667  0.08827887  0.37861131  0.53446470  
+3.2701e-04  1.7583e-05  8.9457e-02  3.7710e-01  5.3440e-01  
 
 Std. Errors:
  based on Hessian 
 
 Error Analysis:
         Estimate  Std. Error  t value Pr(&gt;|t|)    
-mu     1.006e-04   1.108e-03    0.091 0.927623    
-omega  1.667e-05   8.485e-06    1.965 0.049455 *  
-alpha1 8.828e-02   1.506e-02    5.862 4.57e-09 ***
-beta1  3.786e-01   1.463e-01    2.588 0.009665 ** 
-beta2  5.345e-01   1.383e-01    3.865 0.000111 ***
+mu     3.270e-04   1.106e-03    0.296  0.76749    
+omega  1.758e-05   8.715e-06    2.018  0.04363 *  
+alpha1 8.946e-02   1.522e-02    5.876 4.19e-09 ***
+beta1  3.771e-01   1.453e-01    2.595  0.00946 ** 
+beta2  5.344e-01   1.372e-01    3.896 9.79e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Log Likelihood:
- 2299.273    normalized:  1.529789 
+ 2310.996    normalized:  1.529448 
 
 Description:
- Wed Apr 19 22:28:58 2023 by user: sleblanc 
+ Mon May  1 12:44:35 2023 by user: sleblanc 
 
 
 Standardised Residuals Tests:
                                 Statistic p-Value  
- Jarque-Bera Test   R    Chi^2  1384.355  0        
- Shapiro-Wilk Test  R    W      0.9548813 0        
- Ljung-Box Test     R    Q(10)  12.36367  0.2614546
- Ljung-Box Test     R    Q(15)  19.83273  0.1784436
- Ljung-Box Test     R    Q(20)  20.96854  0.3989861
- Ljung-Box Test     R^2  Q(10)  6.105365  0.8063346
- Ljung-Box Test     R^2  Q(15)  10.01006  0.8191064
- Ljung-Box Test     R^2  Q(20)  11.17785  0.9414792
- LM Arch Test       R    TR^2   8.459343  0.7482836
+ Jarque-Bera Test   R    Chi^2  1408.668  0        
+ Shapiro-Wilk Test  R    W      0.9548206 0        
+ Ljung-Box Test     R    Q(10)  12.31858  0.2643006
+ Ljung-Box Test     R    Q(15)  19.50652  0.1916912
+ Ljung-Box Test     R    Q(20)  20.63407  0.4189453
+ Ljung-Box Test     R^2  Q(10)  6.022325  0.8133841
+ Ljung-Box Test     R^2  Q(15)  9.940587  0.8234604
+ Ljung-Box Test     R^2  Q(20)  11.10935  0.9433373
+ LM Arch Test       R    TR^2   8.351932  0.757059 
 
 Information Criterion Statistics:
       AIC       BIC       SIC      HQIC 
--3.052925 -3.035243 -3.052947 -3.046338 </code></pre>
+-3.052277 -3.034671 -3.052299 -3.045721 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -596,7 +600,7 @@ Information Criterion Statistics:
  [7] ""                                                               
  [8] "Mean and Variance Equation:"                                    
  [9] " data ~ garch(1, 2)"                                            
-[10] "&lt;environment: 0x000002ab9073f940&gt;"                              
+[10] "&lt;environment: 0x000001971f6ebfb0&gt;"                              
 [11] " [data = arima.res]"                                            
 [12] ""                                                               
 [13] "Conditional Distribution:"                                      
@@ -604,26 +608,26 @@ Information Criterion Statistics:
 [15] ""                                                               
 [16] "Coefficient(s):"                                                
 [17] "        mu       omega      alpha1       beta1       beta2  "   
-[18] "0.00010064  0.00001667  0.08827887  0.37861131  0.53446470  "   
+[18] "3.2701e-04  1.7583e-05  8.9457e-02  3.7710e-01  5.3440e-01  "   
 [19] ""                                                               
 [20] "Std. Errors:"                                                   
 [21] " based on Hessian "                                             
 [22] ""                                                               
 [23] "Error Analysis:"                                                
 [24] "        Estimate  Std. Error  t value Pr(&gt;|t|)    "             
-[25] "mu     1.006e-04   1.108e-03    0.091 0.927623    "             
-[26] "omega  1.667e-05   8.485e-06    1.965 0.049455 *  "             
-[27] "alpha1 8.828e-02   1.506e-02    5.862 4.57e-09 ***"             
-[28] "beta1  3.786e-01   1.463e-01    2.588 0.009665 ** "             
-[29] "beta2  5.345e-01   1.383e-01    3.865 0.000111 ***"             
+[25] "mu     3.270e-04   1.106e-03    0.296  0.76749    "             
+[26] "omega  1.758e-05   8.715e-06    2.018  0.04363 *  "             
+[27] "alpha1 8.946e-02   1.522e-02    5.876 4.19e-09 ***"             
+[28] "beta1  3.771e-01   1.453e-01    2.595  0.00946 ** "             
+[29] "beta2  5.344e-01   1.372e-01    3.896 9.79e-05 ***"             
 [30] "---"                                                            
 [31] "Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1" 
 [32] ""                                                               
 [33] "Log Likelihood:"                                                
-[34] " 2299.273    normalized:  1.529789 "                            
+[34] " 2310.996    normalized:  1.529448 "                            
 [35] ""                                                               
 [36] "Description:"                                                   
-[37] " Wed Apr 19 22:28:58 2023 by user: sleblanc "                   
+[37] " Mon May  1 12:44:35 2023 by user: sleblanc "                   
 [38] ""                                                               </code></pre>
 </div>
 </div>
@@ -643,106 +647,106 @@ Information Criterion Statistics:
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    meanForecast  meanError standardDeviation lowerInterval upperInterval
-1   0.0001006369 0.07359713        0.07359713    -0.1441471     0.1443484
-2   0.0001006369 0.07441916        0.07441916    -0.1457582     0.1459595
-3   0.0001006369 0.07414415        0.07414415    -0.1452192     0.1454205
-4   0.0001006369 0.07445340        0.07445340    -0.1458254     0.1460266
-5   0.0001006369 0.07445085        0.07445085    -0.1458203     0.1460216
-6   0.0001006369 0.07461442        0.07461442    -0.1461409     0.1463422
-7   0.0001006369 0.07468931        0.07468931    -0.1462877     0.1464890
-8   0.0001006369 0.07481140        0.07481140    -0.1465270     0.1467283
-9   0.0001006369 0.07490823        0.07490823    -0.1467168     0.1469181
-10  0.0001006369 0.07501845        0.07501845    -0.1469328     0.1471341
-11  0.0001006369 0.07512144        0.07512144    -0.1471347     0.1473360
-12  0.0001006369 0.07522820        0.07522820    -0.1473439     0.1475452
-13  0.0001006369 0.07533287        0.07533287    -0.1475491     0.1477503
-14  0.0001006369 0.07543857        0.07543857    -0.1477562     0.1479575
-15  0.0001006369 0.07554364        0.07554364    -0.1479622     0.1481634
-16  0.0001006369 0.07564896        0.07564896    -0.1481686     0.1483699
-17  0.0001006369 0.07575406        0.07575406    -0.1483746     0.1485759
-18  0.0001006369 0.07585920        0.07585920    -0.1485807     0.1487819
-19  0.0001006369 0.07596424        0.07596424    -0.1487865     0.1489878
-20  0.0001006369 0.07606925        0.07606925    -0.1489924     0.1491936
-21  0.0001006369 0.07617420        0.07617420    -0.1491980     0.1493993
-22  0.0001006369 0.07627910        0.07627910    -0.1494036     0.1496049
-23  0.0001006369 0.07638394        0.07638394    -0.1496091     0.1498104
-24  0.0001006369 0.07648874        0.07648874    -0.1498145     0.1500158
-25  0.0001006369 0.07659348        0.07659348    -0.1500198     0.1502211
-26  0.0001006369 0.07669818        0.07669818    -0.1502250     0.1504263
-27  0.0001006369 0.07680282        0.07680282    -0.1504301     0.1506314
-28  0.0001006369 0.07690741        0.07690741    -0.1506351     0.1508364
-29  0.0001006369 0.07701196        0.07701196    -0.1508400     0.1510413
-30  0.0001006369 0.07711645        0.07711645    -0.1510448     0.1512461
-31  0.0001006369 0.07722089        0.07722089    -0.1512495     0.1514508
-32  0.0001006369 0.07732529        0.07732529    -0.1514541     0.1516554
-33  0.0001006369 0.07742964        0.07742964    -0.1516587     0.1518599
-34  0.0001006369 0.07753394        0.07753394    -0.1518631     0.1520644
-35  0.0001006369 0.07763819        0.07763819    -0.1520674     0.1522687
-36  0.0001006369 0.07774239        0.07774239    -0.1522716     0.1524729
-37  0.0001006369 0.07784654        0.07784654    -0.1524758     0.1526771
-38  0.0001006369 0.07795065        0.07795065    -0.1526798     0.1528811
-39  0.0001006369 0.07805471        0.07805471    -0.1528838     0.1530851
-40  0.0001006369 0.07815872        0.07815872    -0.1530876     0.1532889
-41  0.0001006369 0.07826269        0.07826269    -0.1532914     0.1534927
-42  0.0001006369 0.07836661        0.07836661    -0.1534951     0.1536964
-43  0.0001006369 0.07847049        0.07847049    -0.1536987     0.1539000
-44  0.0001006369 0.07857431        0.07857431    -0.1539022     0.1541035
-45  0.0001006369 0.07867810        0.07867810    -0.1541056     0.1543069
-46  0.0001006369 0.07878184        0.07878184    -0.1543089     0.1545102
-47  0.0001006369 0.07888553        0.07888553    -0.1545122     0.1547134
-48  0.0001006369 0.07898918        0.07898918    -0.1547153     0.1549166
-49  0.0001006369 0.07909278        0.07909278    -0.1549184     0.1551196
-50  0.0001006369 0.07919634        0.07919634    -0.1551213     0.1553226
-51  0.0001006369 0.07929986        0.07929986    -0.1553242     0.1555255
-52  0.0001006369 0.07940333        0.07940333    -0.1555270     0.1557283
-53  0.0001006369 0.07950676        0.07950676    -0.1557297     0.1559310
-54  0.0001006369 0.07961014        0.07961014    -0.1559324     0.1561336
-55  0.0001006369 0.07971348        0.07971348    -0.1561349     0.1563362
-56  0.0001006369 0.07981678        0.07981678    -0.1563374     0.1565387
-57  0.0001006369 0.07992004        0.07992004    -0.1565398     0.1567410
-58  0.0001006369 0.08002326        0.08002326    -0.1567421     0.1569433
-59  0.0001006369 0.08012643        0.08012643    -0.1569443     0.1571456
-60  0.0001006369 0.08022956        0.08022956    -0.1571464     0.1573477
-61  0.0001006369 0.08033265        0.08033265    -0.1573485     0.1575497
-62  0.0001006369 0.08043570        0.08043570    -0.1575504     0.1577517
-63  0.0001006369 0.08053871        0.08053871    -0.1577523     0.1579536
-64  0.0001006369 0.08064167        0.08064167    -0.1579541     0.1581554
-65  0.0001006369 0.08074460        0.08074460    -0.1581559     0.1583571
-66  0.0001006369 0.08084749        0.08084749    -0.1583575     0.1585588
-67  0.0001006369 0.08095033        0.08095033    -0.1585591     0.1587604
-68  0.0001006369 0.08105314        0.08105314    -0.1587606     0.1589619
-69  0.0001006369 0.08115590        0.08115590    -0.1589620     0.1591633
-70  0.0001006369 0.08125863        0.08125863    -0.1591634     0.1593646
-71  0.0001006369 0.08136132        0.08136132    -0.1593646     0.1595659
-72  0.0001006369 0.08146397        0.08146397    -0.1595658     0.1597671
-73  0.0001006369 0.08156658        0.08156658    -0.1597669     0.1599682
-74  0.0001006369 0.08166915        0.08166915    -0.1599680     0.1601692
-75  0.0001006369 0.08177168        0.08177168    -0.1601689     0.1603702
-76  0.0001006369 0.08187418        0.08187418    -0.1603698     0.1605711
-77  0.0001006369 0.08197664        0.08197664    -0.1605706     0.1607719
-78  0.0001006369 0.08207906        0.08207906    -0.1607714     0.1609726
-79  0.0001006369 0.08218144        0.08218144    -0.1609720     0.1611733
-80  0.0001006369 0.08228379        0.08228379    -0.1611726     0.1613739
-81  0.0001006369 0.08238610        0.08238610    -0.1613731     0.1615744
-82  0.0001006369 0.08248837        0.08248837    -0.1615736     0.1617749
-83  0.0001006369 0.08259060        0.08259060    -0.1617740     0.1619752
-84  0.0001006369 0.08269280        0.08269280    -0.1619743     0.1621756
-85  0.0001006369 0.08279497        0.08279497    -0.1621745     0.1623758
-86  0.0001006369 0.08289709        0.08289709    -0.1623747     0.1625760
-87  0.0001006369 0.08299919        0.08299919    -0.1625748     0.1627761
-88  0.0001006369 0.08310124        0.08310124    -0.1627748     0.1629761
-89  0.0001006369 0.08320326        0.08320326    -0.1629748     0.1631760
-90  0.0001006369 0.08330525        0.08330525    -0.1631747     0.1633759
-91  0.0001006369 0.08340720        0.08340720    -0.1633745     0.1635757
-92  0.0001006369 0.08350912        0.08350912    -0.1635742     0.1637755
-93  0.0001006369 0.08361100        0.08361100    -0.1637739     0.1639752
-94  0.0001006369 0.08371285        0.08371285    -0.1639735     0.1641748
-95  0.0001006369 0.08381466        0.08381466    -0.1641731     0.1643744
-96  0.0001006369 0.08391644        0.08391644    -0.1643726     0.1645738
-97  0.0001006369 0.08401819        0.08401819    -0.1645720     0.1647733
-98  0.0001006369 0.08411991        0.08411991    -0.1647713     0.1649726
-99  0.0001006369 0.08422159        0.08422159    -0.1649706     0.1651719
-100 0.0001006369 0.08432323        0.08432323    -0.1651699     0.1653711</code></pre>
+1   0.0003270138 0.06720245        0.06720245    -0.1313874     0.1320414
+2   0.0003270138 0.06778052        0.06778052    -0.1325204     0.1331744
+3   0.0003270138 0.06763475        0.06763475    -0.1322347     0.1328887
+4   0.0003270138 0.06787450        0.06787450    -0.1327046     0.1333586
+5   0.0003270138 0.06790845        0.06790845    -0.1327711     0.1334251
+6   0.0003270138 0.06805196        0.06805196    -0.1330524     0.1337064
+7   0.0003270138 0.06813690        0.06813690    -0.1332188     0.1338729
+8   0.0003270138 0.06825292        0.06825292    -0.1334462     0.1341003
+9   0.0003270138 0.06835221        0.06835221    -0.1336409     0.1342949
+10  0.0003270138 0.06846027        0.06846027    -0.1338527     0.1345067
+11  0.0003270138 0.06856352        0.06856352    -0.1340550     0.1347090
+12  0.0003270138 0.06866918        0.06866918    -0.1342621     0.1349161
+13  0.0003270138 0.06877341        0.06877341    -0.1344664     0.1351204
+14  0.0003270138 0.06887826        0.06887826    -0.1346719     0.1353259
+15  0.0003270138 0.06898263        0.06898263    -0.1348765     0.1355305
+16  0.0003270138 0.06908712        0.06908712    -0.1350813     0.1357353
+17  0.0003270138 0.06919140        0.06919140    -0.1352856     0.1359397
+18  0.0003270138 0.06929565        0.06929565    -0.1354900     0.1361440
+19  0.0003270138 0.06939978        0.06939978    -0.1356940     0.1363481
+20  0.0003270138 0.06950383        0.06950383    -0.1358980     0.1365520
+21  0.0003270138 0.06960778        0.06960778    -0.1361017     0.1367558
+22  0.0003270138 0.06971164        0.06971164    -0.1363053     0.1369593
+23  0.0003270138 0.06981542        0.06981542    -0.1365087     0.1371627
+24  0.0003270138 0.06991910        0.06991910    -0.1367119     0.1373659
+25  0.0003270138 0.07002269        0.07002269    -0.1369149     0.1375690
+26  0.0003270138 0.07012620        0.07012620    -0.1371178     0.1377718
+27  0.0003270138 0.07022962        0.07022962    -0.1373205     0.1379745
+28  0.0003270138 0.07033295        0.07033295    -0.1375230     0.1381771
+29  0.0003270138 0.07043619        0.07043619    -0.1377254     0.1383794
+30  0.0003270138 0.07053934        0.07053934    -0.1379276     0.1385816
+31  0.0003270138 0.07064241        0.07064241    -0.1381296     0.1387836
+32  0.0003270138 0.07074539        0.07074539    -0.1383314     0.1389854
+33  0.0003270138 0.07084828        0.07084828    -0.1385331     0.1391871
+34  0.0003270138 0.07095109        0.07095109    -0.1387346     0.1393886
+35  0.0003270138 0.07105382        0.07105382    -0.1389359     0.1395899
+36  0.0003270138 0.07115646        0.07115646    -0.1391371     0.1397911
+37  0.0003270138 0.07125902        0.07125902    -0.1393381     0.1399921
+38  0.0003270138 0.07136149        0.07136149    -0.1395389     0.1401930
+39  0.0003270138 0.07146388        0.07146388    -0.1397396     0.1403936
+40  0.0003270138 0.07156618        0.07156618    -0.1399401     0.1405942
+41  0.0003270138 0.07166840        0.07166840    -0.1401405     0.1407945
+42  0.0003270138 0.07177054        0.07177054    -0.1403407     0.1409947
+43  0.0003270138 0.07187260        0.07187260    -0.1405407     0.1411947
+44  0.0003270138 0.07197458        0.07197458    -0.1407406     0.1413946
+45  0.0003270138 0.07207648        0.07207648    -0.1409403     0.1415943
+46  0.0003270138 0.07217829        0.07217829    -0.1411398     0.1417939
+47  0.0003270138 0.07228003        0.07228003    -0.1413392     0.1419933
+48  0.0003270138 0.07238168        0.07238168    -0.1415385     0.1421925
+49  0.0003270138 0.07248326        0.07248326    -0.1417376     0.1423916
+50  0.0003270138 0.07258475        0.07258475    -0.1419365     0.1425905
+51  0.0003270138 0.07268617        0.07268617    -0.1421353     0.1427893
+52  0.0003270138 0.07278751        0.07278751    -0.1423339     0.1429879
+53  0.0003270138 0.07288877        0.07288877    -0.1425324     0.1431864
+54  0.0003270138 0.07298995        0.07298995    -0.1427307     0.1433847
+55  0.0003270138 0.07309106        0.07309106    -0.1429288     0.1435829
+56  0.0003270138 0.07319209        0.07319209    -0.1431268     0.1437809
+57  0.0003270138 0.07329304        0.07329304    -0.1433247     0.1439787
+58  0.0003270138 0.07339392        0.07339392    -0.1435224     0.1441764
+59  0.0003270138 0.07349472        0.07349472    -0.1437200     0.1443740
+60  0.0003270138 0.07359544        0.07359544    -0.1439174     0.1445714
+61  0.0003270138 0.07369609        0.07369609    -0.1441147     0.1447687
+62  0.0003270138 0.07379666        0.07379666    -0.1443118     0.1449658
+63  0.0003270138 0.07389716        0.07389716    -0.1445088     0.1451628
+64  0.0003270138 0.07399759        0.07399759    -0.1447056     0.1453596
+65  0.0003270138 0.07409794        0.07409794    -0.1449023     0.1455563
+66  0.0003270138 0.07419822        0.07419822    -0.1450988     0.1457528
+67  0.0003270138 0.07429842        0.07429842    -0.1452952     0.1459492
+68  0.0003270138 0.07439855        0.07439855    -0.1454915     0.1461455
+69  0.0003270138 0.07449861        0.07449861    -0.1456876     0.1463416
+70  0.0003270138 0.07459860        0.07459860    -0.1458836     0.1465376
+71  0.0003270138 0.07469851        0.07469851    -0.1460794     0.1467334
+72  0.0003270138 0.07479836        0.07479836    -0.1462751     0.1469291
+73  0.0003270138 0.07489813        0.07489813    -0.1464706     0.1471247
+74  0.0003270138 0.07499783        0.07499783    -0.1466660     0.1473201
+75  0.0003270138 0.07509746        0.07509746    -0.1468613     0.1475153
+76  0.0003270138 0.07519702        0.07519702    -0.1470564     0.1477105
+77  0.0003270138 0.07529651        0.07529651    -0.1472514     0.1479055
+78  0.0003270138 0.07539593        0.07539593    -0.1474463     0.1481003
+79  0.0003270138 0.07549529        0.07549529    -0.1476410     0.1482951
+80  0.0003270138 0.07559457        0.07559457    -0.1478356     0.1484896
+81  0.0003270138 0.07569378        0.07569378    -0.1480301     0.1486841
+82  0.0003270138 0.07579293        0.07579293    -0.1482244     0.1488784
+83  0.0003270138 0.07589201        0.07589201    -0.1484186     0.1490726
+84  0.0003270138 0.07599102        0.07599102    -0.1486126     0.1492667
+85  0.0003270138 0.07608996        0.07608996    -0.1488066     0.1494606
+86  0.0003270138 0.07618883        0.07618883    -0.1490004     0.1496544
+87  0.0003270138 0.07628764        0.07628764    -0.1491940     0.1498480
+88  0.0003270138 0.07638638        0.07638638    -0.1493875     0.1500416
+89  0.0003270138 0.07648506        0.07648506    -0.1495809     0.1502350
+90  0.0003270138 0.07658367        0.07658367    -0.1497742     0.1504282
+91  0.0003270138 0.07668221        0.07668221    -0.1499674     0.1506214
+92  0.0003270138 0.07678069        0.07678069    -0.1501604     0.1508144
+93  0.0003270138 0.07687910        0.07687910    -0.1503533     0.1510073
+94  0.0003270138 0.07697745        0.07697745    -0.1505460     0.1512000
+95  0.0003270138 0.07707573        0.07707573    -0.1507386     0.1513927
+96  0.0003270138 0.07717395        0.07717395    -0.1509312     0.1515852
+97  0.0003270138 0.07727211        0.07727211    -0.1511235     0.1517776
+98  0.0003270138 0.07737020        0.07737020    -0.1513158     0.1519698
+99  0.0003270138 0.07746823        0.07746823    -0.1515079     0.1521619
+100 0.0003270138 0.07756619        0.07756619    -0.1516999     0.1523540</code></pre>
 </div>
 </div>
 </section>
@@ -759,7 +763,7 @@ Information Criterion Statistics:
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>CVNA<span class="sc">$</span>date<span class="ot">=</span><span class="fu">as.Date</span>(CVNA<span class="sc">$</span>date,<span class="st">"%Y-%m-%d"</span>)</span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(CVNA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   1503 obs. of  7 variables:
+<pre><code>'data.frame':   1511 obs. of  7 variables:
  $ CVNA.Open    : num  13.5 11.6 10.95 10.18 8.59 ...
  $ CVNA.High    : num  13.9 11.7 10.9 10.2 10 ...
  $ CVNA.Low     : num  10.7 10.7 10 8.18 8.14 9.75 10.5 10.4 9.61 10.4 ...
@@ -912,6 +916,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./arimax.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">ARIMAX/SARIMAX/VAR</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./sunspot.html" class="pagination-link">
+        <span class="nav-page-text">Deep Learning for TS</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
