@@ -26,6 +26,8 @@ website:
       - href: greenhouse_gases_deep_learning.html
         text: Deep Learning for TS
       - conc.qmd
+      - href: https://github.com/SamLeBlanc/AN560-Portfolio/tree/main/website-source
+        text: Code
 
 format:
   html:

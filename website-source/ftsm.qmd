@@ -175,7 +175,7 @@ Since all the models has similar AIC ,BIC values, I would go with GARCH(1,1) whi
 
 ### Final Model
 
-The final model has a decent but not great fir for the Carvana stock return data. All of the errors except for mu are significant but the Ljung-Box statistics are well over the standard threshold. Since there is a mix of indicators, this tells us that the model is decent but not quantifiable better than the simpler ARIMA model. Thus, in this case I would rely on the ARIMA since it is a simpler specification.
+The final model has a decent but not great fit for the Exxon stock return data. All of the errors except for mu are significant but the Ljung-Box statistics are well over the standard threshold. Since there is a mix of indicators, this tells us that the model is decent but not quantifiable better than the simpler ARIMA model. Thus, in this case I would rely on the ARIMA since it is a simpler specification.
 
 ```{r, echo=FALSE,message=FALSE,warning=FALSE}
 arima.fit=Arima(data,order=c(0,1,0),include.drift = TRUE)
@@ -211,7 +211,6 @@ predict(final.fit, n.ahead = 100, plot=TRUE)
 
 ## Volatality plot
 
-Finally, we should also consider the volatility of the data. Volatility is a key feature of financial time series data and will have large effect on the model we end up choosing. Below is the plot of the volatility of the Carvana data. When looking at the volatility plot, we see several large spikes that stick out. The first is in March 2020, which was right at the beginning of COVID, so the volatility is expected. The second large spike occurs at the send of 2022, which is unexpected because the value of the stock is so low at that point. However, it could be thatwith such a low stock price, relative changes have a greater effect. A \$10 gain when the stock is at \$10 is a 100% increase, but when the stock was at \$400 this would be just a 2.5% gain. So it is not crazy that the stock because much more volatile as they value fell off a cliff in 2022.
 
 ```{r, echo=FALSE,message=FALSE,warning=FALSE}
 # ht = final.fit@h.t #a numeric vector with the conditional variances (h.t = sigma.t^delta)
@@ -223,5 +222,5 @@ Finally, we should also consider the volatility of the data. Volatility is a key
 # str(XOM)
 # 
 # data= data.frame(ht,XOM$date)
-# ggplot(data, aes(y = ht, x = XOM)) + geom_line(col = '#009933') + ylab('Conditional Variance') + xlab('Date')+ggtitle("Volatality plot of Carvana Stock")
+# ggplot(data, aes(y = ht, x = XOM)) + geom_line(col = '#009933') + ylab('Conditional Variance') + xlab('Date')+ggtitle("Volatality plot of Exxon Stock")
 ```

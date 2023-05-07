@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>AN560: Sam LeBlanc - Time Series</title>
+<title>AN560: Sam LeBlanc - Introduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,6 +58,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -67,7 +68,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Time Series</h1>
+      <h1 class="quarto-secondary-nav-title">Introduction</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -135,19 +136,35 @@ ul.task-list li input[type="checkbox"] {
   <a href="./conc.html" class="sidebar-item-text sidebar-link">Conclusions</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://github.com/SamLeBlanc/AN560-Portfolio/tree/main/website-source" class="sidebar-item-text sidebar-link">Code</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">☀️🌍🏭📈🌡️🕒⏳🔥🌊⚡️☀️🌍🏭📈🌡️🕒⏳🔥🌊⚡️</a></li>
+  <li><a href="#what-is-a-time-series" id="toc-what-is-a-time-series" class="nav-link" data-scroll-target="#what-is-a-time-series">What is a Time Series?</a></li>
+  <li><a href="#what-are-greenhouse-gases" id="toc-what-are-greenhouse-gases" class="nav-link" data-scroll-target="#what-are-greenhouse-gases">What are Greenhouse Gases?</a></li>
+  <li><a href="#my-project" id="toc-my-project" class="nav-link" data-scroll-target="#my-project">My Project</a></li>
+  <li><a href="#guiding-questions" id="toc-guiding-questions" class="nav-link" data-scroll-target="#guiding-questions">Guiding Questions</a></li>
+  <li><a href="#project-goals-and-structure" id="toc-project-goals-and-structure" class="nav-link" data-scroll-target="#project-goals-and-structure">Project Goals and Structure</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Time Series</h1>
+<h1 class="title d-none d-lg-block">Introduction</h1>
 </div>
 
 
@@ -162,8 +179,78 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Welcome to my (<a href="me.html">Sam LeBlanc</a>, nice to meet you 👋) class portfolio for ANLY 560 - Time Series Analysis at Georgetown University. The course is an in-depth exploration of time series data analysis, and provides a critical approach for using statistics and machine to learn about sequential time data, which holds unique challenges due to the inherent correlation of adjacent observations. If that sounds like a lot, don’t worry, it is 🙃. This project is titled, <strong><em>Exploring Atmospheric Concentrations of Greenhouse Gases with Time Series Analysis</em></strong>, and I will let you (dear reader) figure out what that means…</p>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section">☀️🌍🏭📈🌡️🕒⏳🔥🌊⚡️☀️🌍🏭📈🌡️🕒⏳🔥🌊⚡️</h3>
+<p><br></p>
+</section>
+<section id="what-is-a-time-series" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-time-series">What is a Time Series?</h2>
+<ul>
+<li><p>Any metric that is consistently measured over regular time intervals. Some examples of time series data include: weather, stocks, industry forecasts, traffic, and energy prices.</p></li>
+<li><p>What makes a time series special of the auto-correlation in the data. Successive observations are not independent as they strictly rely on data from directly before the observation.</p></li>
+<li><p>This can severely restrict the applicability of the many conventional statistical methods traditionally dependent on the assumption that these adjacent observations are independent and identically distributed.</p></li>
+</ul>
+</section>
+<section id="what-are-greenhouse-gases" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-greenhouse-gases">What are Greenhouse Gases?</h2>
+<ul>
+<li><p><strong>Nature and Composition:</strong> Greenhouse gases are atmospheric gases that have the capacity to absorb and emit infrared radiation, contributing to the greenhouse effect. Principal greenhouse gases include carbon dioxide (<span class="math inline">\(CO_2\)</span>), methane (<span class="math inline">\(CH_4\)</span>), nitrous oxide (<span class="math inline">\(N2_O\)</span>), and fluorinated gases such as sulfur hexafluoride (<span class="math inline">\(SF_6\)</span>).</p></li>
+<li><p><strong>Role in Climate Change:</strong> These gases play a critical role in the warming of our planet. They trap heat in the Earth’s atmosphere by preventing it from escaping back into space, causing global temperatures to rise—a phenomenon known as global warming. This is a major driver of the ongoing changes in our global climate.</p></li>
+<li><p><strong>Sources:</strong> Greenhouse gases are released from both natural and human-made sources. Natural sources include decomposition, respiration, ocean release, and volcanic eruptions. Human activities, such as burning fossil fuels for electricity, heat, and transportation, deforestation, and industrial processes, significantly contribute to the increase in greenhouse gases in the atmosphere.</p></li>
+</ul>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://climate.nasa.gov/system/internal_resources/details/original/249_Causes-greenhouse-gas-molecules-cropped-more-55.jpg" class="img-fluid figure-img" width="468"></p>
+<p></p><figcaption class="figure-caption">Example of several important greenhouse gases.</figcaption><p></p>
+</figure>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Climate_Change_Schematic.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Diagram of the (natural) Greenhouse Effect. This image does not account for additional anthropogenic greenhouses gas emissions.</figcaption><p></p>
+</figure>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/historic.jpg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="my-project" class="level2">
+<h2 class="anchored" data-anchor-id="my-project">My Project</h2>
+<p>This semester, my project revolves around analyzing the atmospheric concentrations of greenhouse gases over time. Using the tools and techniques I’ve learned in ANLY 560, I’ll be investigating why these concentrations are increasing and how this knowledge can be used to inform policy decisions and contribute to the fight against climate change.</p>
+<p>Based on data from NOAA’s Global Monitoring Lab, in 2020, even with decreased emissions due to the COVID-19 pandemic, the global average atmospheric carbon dioxide still managed to reach a new record high of 414.72 ppm (parts per million). This increase, the 5th-highest yearly increase since NOAA’s record began in 1958, shows the unabated rise in greenhouse gases. The main reason for the rise in carbon dioxide is the burning of fossil fuels, which has tripled from an average of 3 billion tons of carbon (11 billion tons of carbon dioxide) per year in the 1960s to 9.5 billion tons of carbon (35 billion tons of carbon dioxide) per year in the 2010s.</p>
+<p><img src="images/noaaco2.png" class="img-fluid"></p>
+<p>While carbon dioxide often takes the spotlight in discussions about greenhouse gases, it’s crucial to remember that it’s not the only player. Methane, for example, which is heavily produced by livestock such as cows, has a larger effect on global warming. As part of this project, I will investigate the correlation between methane and carbon dioxide emissions and aim to raise awareness about the environmental impact of methane.</p>
+<p>I am looking into the potential of using greenhouse gas concentrations (by themselves) as predictors for temperature changes. Although I recognize that greenhouse gases alone may not be sufficient to provide accurate temperature predictions, this exploration serves as a starting point for understanding their impact. A good climate model would surely integrate greenhouse gases along with various other factors; however, isolating the influence of these gases will allow us to gauge their predictive power in isolation. By employing advanced statistical methods and time series analysis techniques, I aim to uncover the extent to which greenhouse gas concentrations can be used to forecast temperature fluctuations, shedding light on their significance in the climate change narrative.</p>
+</section>
+<section id="guiding-questions" class="level2">
+<h2 class="anchored" data-anchor-id="guiding-questions">Guiding Questions</h2>
+<p>To navigate through the complex world of greenhouse gases and their impact on our climate, I have outlined several guiding questions for this study:</p>
+<ul>
+<li><p>Is there a greater correlation between carbon-based greenhouse gases (carbon dioxide and methane) versus non-carbon based greenhouse gases (nitrous oxide and sulfur hexafluoride)?</p></li>
+<li><p>To what degree is the trend of the four greenhouse gas concentrations correlated?</p></li>
+<li><p>To what degree is the seasonality of the four greenhouse gas concentrations correlated?</p></li>
+<li><p>Are any of the greenhouse gas concentrations strongly or weakly stationary?</p></li>
+<li><p>What is the daily predictive accuracy of the four greenhouse gases?</p></li>
+<li><p>Are there significant differences in seasonal trends between the northern and southern hemispheres, or at the equator?</p></li>
+<li><p>Is there a correlation between the proximity of a station to large greenhouse gas emitters and the magnitude of seasonal variation in concentrations?</p></li>
+<li><p>How do the temporal components of the data vary by station or region?</p></li>
+<li><p>To what extent are greenhouse gas concentrations affected by meteorological conditions, specifically temperature?</p></li>
+<li><p>Do the data indicate any potential avenues of mitigation of climate change?</p></li>
+</ul>
+<p>These questions will steer my exploration and analysis, as I endeavor to unravel the secrets that the time series data of atmospheric greenhouse gases hold. Join me on this fascinating journey, where every discovery brings us one step closer to understanding and mitigating the effects of climate change.</p>
+</section>
+<section id="project-goals-and-structure" class="level2">
+<h2 class="anchored" data-anchor-id="project-goals-and-structure">Project Goals and Structure</h2>
+<p>The primary goal of this project is to employ time series analysis techniques to unravel the patterns of greenhouse gas concentrations over time and comprehend their consequences for our climate. Gathering reliable and extensive datasets from reputable sources such as NOAA’s Global Monitoring Lab will lay the groundwork, while data storytelling techniques will be used to create engaging and clear visual representations of the data. Throughout the project, we will focus on understanding the implications of rising greenhouse gas concentrations, the role of human activities in these increases, and exploring potential pathways for climate change mitigation. By using techniques such as ARMA/ARIMA/SARIMA models, ARIMAX/SARIMAX/VAR, and deep learning for time series, and concentrating on these themes, I hope to generate insights that could inform policy decisions and contribute to the worldwide discussion on climate change.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
