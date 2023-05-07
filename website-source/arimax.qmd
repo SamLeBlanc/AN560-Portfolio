@@ -1,0 +1,200 @@
+---
+title: "ARIMAX/SARIMAX/VAR"
+---
+
+# VAR Model
+
+In this section, we are presented with the opportunity to leverage more intricate models, such as ARIMAX, SARIMAX, or VAR, to better understand the time series of greenhouse gas concentrations. We will persist in utilizing the variables of carbon dioxide, methane, nitrous oxide, and sulphur hexafluoride, as provided by the Global Monitoring Laboratory at NOAA. As previously indicated, these time series are not isolated phenomena. Numerous greenhouse gas emitters discharge more than one of the aforementioned gases, and all are generally associated with increased industrialization. Therefore, to simultaneously predict alterations in these interconnected variables over time, we will employ a VAR model in this segment.
+
+## Background
+
+Vector Autoregression (VAR) is a multivariate forecasting algorithm widely used in time series data analysis. It enables predictions of changes in several interdependent variables over time. Unlike univariate autoregressive models, which analyze one series independently, VAR explores multiple series in unison, encapsulating the linear interdependencies among them.
+
+![](images/var.png){fig-align="center"}
+
+In a VAR model, each variable is represented by an equation that illustrates its evolution over time. This equation is derived from the variable's own prior values (lags), as well as the lags of all other variables under consideration. The model also incorporates an error term to account for variations not explained by the time-lagged values. This integration allows the VAR model to comprehend and encapsulate the dynamic interplay between different variables.
+
+VAR models are particularly advantageous in fields where numerous variables interrelate over time, such as economics and natural sciences. They offer simplicity and adaptability, necessitating minimal prior knowledge about the variables' influencing factors. The sole prerequisite is a set of variables hypothesized to affect one another over time.
+
+While the primary aspects of VAR are underlined above, it's crucial to note that VAR models possess certain limitations. As linear models, they may struggle to capture intricate non-linear relationships. They also presume that the relationships between variables remain constant over time, which might not always hold true. Lastly, VAR models, when handling a multitude of variables and lags, can involve numerous parameters, leading to potential overfitting issues. Despite these constraints, VAR models remain an instrumental tool in multivariate time series analysis.
+
+## Code
+
+```{r ,echo=FALSE, message=FALSE, warning=FALSE}
+library(flipbookr)
+library(tidyverse)
+library(ggplot2)
+library(forecast)
+library(astsa) 
+library(xts)
+library(tseries)
+library(fpp2)
+library(fma)
+library(lubridate)
+library(tidyverse)
+library(TSstudio)
+library(quantmod)
+library(tidyquant)
+library(plotly)
+library(ggplot2)
+library(vars)
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+# Load data
+co2 = read.csv('co2.csv')
+sf6 = read.csv('sf6.csv')
+ch4 = read.csv('ch4.csv')
+n2o = read.csv('n2o.csv')
+```
+
+Based on the plots and background information, we can expect CO2, CH4, N2O, and SF6 to have interrelationships since they are all greenhouse gases and their concentrations may be influenced by similar factors such as human activity and natural processes. From my domain knowledge, I know that most pollution sources contribute more than one type of greenhouse gas to the atmosphere. Thus, it is reasonable to include all four of these time series in the VAR model.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+
+# Plot time series of the individual variables
+g = ggplot(co2, aes(x=decimal, y=average)) +
+  geom_line(color='darkgreen', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly Carbon Dioxide Concentration since 1958',x='Year',y='CO2 Concentration (ppm)')
+ggplotly(g)
+```
+
+<br>
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+
+g = ggplot(sf6, aes(x=decimal, y=average)) +
+  geom_line(color='darkgreen', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly Sulfur Hexafluoride Concentration since 1997',x='Year',y='SF6 Concentration (ppt)')
+ggplotly(g)
+```
+
+<br>
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+g = ggplot(ch4, aes(x=decimal, y=average)) +
+  geom_line(color='darkgreen', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly Methane Concentration since 1983',x='Year',y='CH4 Concentration (ppb)')
+ggplotly(g)
+```
+
+<br>
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+g = ggplot(n2o, aes(x=decimal, y=average)) +
+  geom_line(color='darkgreen', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly Nitrous Oxide Concentration since 2001',x='Year',y='N2O Concentration (ppb)')
+ggplotly(g)
+```
+<br>
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+
+# Convert data into time series objects
+CO2_Concentration <- ts(co2$average, start=c(1958,3), frequency=12)
+CH4_Concentration <- ts(ch4$average, start=c(1983,7), frequency=12)
+N2O_Concentration <- ts(n2o$average, start=c(2001,1), frequency=12)
+SF6_Concentration <- ts(sf6$average, start=c(1997,7), frequency=12)
+
+# Truncate time series to the same date range
+start_date <- c(2001, 1)
+end_date <- c(2022, 8)
+
+CO2_Concentration <- window(CO2_Concentration, start=start_date, end=end_date)
+CH4_Concentration <- window(CH4_Concentration, start=start_date, end=end_date)
+N2O_Concentration <- window(N2O_Concentration, start=start_date, end=end_date)
+SF6_Concentration <- window(SF6_Concentration, start=start_date, end=end_date)
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+
+# Plot pairwise relationships between variables
+pairs(cbind(
+  CO2=CO2_Concentration, 
+  CH4=CH4_Concentration, 
+  N2O=N2O_Concentration,
+  SF6=SF6_Concentration
+  ))
+```
+
+```{v}
+# Plot all time series together
+x = cbind(CO2_Concentration, CH4_Concentration, N2O_Concentration, SF6_Concentration)
+plot.ts(x , main = "", xlab = "")
+```
+
+### VAR p-Selection
+
+Using VAR selection methods, we have found several possible values for p. These are 6 and 10. This is surprising as I would have thought 12 would be a good choice, as that is the length of the seasonal lag. We will test these new p choices along with the standard p=1 and p=2 choices that will give us something to compare to.
+
+```{r}
+x = cbind(CO2_Concentration, CH4_Concentration, N2O_Concentration, SF6_Concentration)
+var_lag_selection <- VARselect(x, lag.max=12, type="both")
+print(var_lag_selection)
+```
+
+```{r}
+# Fit different VAR models based on the selected lags
+fitvar1 = VAR(x, p=1, type="both")
+fitvar2 = VAR(x, p=2, type="both")
+fitvar6 = VAR(x, p=6, type="both")
+fitvar10 = VAR(x, p=10, type="both")
+```
+
+### Cross Validation
+
+Using cross-validation, we see that the model with the lowest MSE is the p=10 model. Thus, we will be selection this as our best model
+
+```{r}
+cv_var <- function(ts_data, p, k) {
+  n <- length(ts_data[, 1])
+  start_ts <- tsp(ts_data)[1] + (k - 1) / 12
+  rmse <- numeric(n - k)
+  
+  for (i in 1:(n - k)) {
+    train_data <- window(ts_data, end = start_ts + (i - 1) / 12)
+    test_data <- window(ts_data, start = start_ts + (i - 1) / 12 + 1 / 12, end = start_ts + i / 12)
+    var_model <- VAR(train_data, p = p, type = "const")
+    forecast <- predict(var_model, n.ahead = 1)$fcst
+    
+    k_step_forecast <- matrix(0, nrow = 1, ncol = ncol(ts_data))
+    for (j in 1:ncol(ts_data)) {
+      k_step_forecast[, j] <- forecast[[j]][1, 1] # Extract the 1-step ahead forecasts
+    }
+    
+    rmse[i] <- sqrt(mean((test_data - k_step_forecast)^2))
+  }
+  
+  return(mean(rmse, na.rm = TRUE))
+}
+```
+
+```{r}
+# Calculate RMSE for each model using cross-validation
+k <- 12 # Number of steps ahead for the forecasts
+RMSE_lag1 <- cv_var(x, p = 1, k = k)
+RMSE_lag2 <- cv_var(x, p = 2, k = k)
+RMSE_lag6 <- cv_var(x, p = 6, k = k)
+RMSE_lag10 <- cv_var(x, p = 10, k = k)
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+
+# Plot the RMSEs
+barplot(c(RMSE_lag1, RMSE_lag2, RMSE_lag6, RMSE_lag10), names.arg = c("Lag 1", "Lag 2","Lag 6", "Lag 10"), ylab = "RMSE")
+```
+
+### Model Fit and Forecast
+
+The selected model, VAR(10), was chosen based on its lowest RMSE value obtained through cross-validation, which suggests that this model provides the best fit for the data among the tested models. This model can be utilized to predict future concentrations of CO2, CH4, N2O, and SF6, all of which are greenhouse gases. By analyzing these forecasts, we can gain insights into the potential future trends of these greenhouse gas concentrations. It is important to note, however, that the accuracy of these forecasts depends on the underlying assumptions of the VAR model and the quality of the historical data. As such, the results should be interpreted with caution, considering possible uncertainties and changes in factors influencing greenhouse gas concentrations.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+
+best_var_model <- fitvar10 # Replace with the best model
+n_forecast <- 120 # Number of months to forecast
+var_forecast <- forecast(best_var_model, h=n_forecast)
+plot(var_forecast)
+```

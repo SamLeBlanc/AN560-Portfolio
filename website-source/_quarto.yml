@@ -1,0 +1,41 @@
+project:
+  type: website
+
+website:
+  page-navigation: true
+  title: "AN560: Sam LeBlanc"
+  description: "Description"
+
+
+  sidebar:
+    background: "black"
+    logo: "images/gg.png"
+    search: false
+    pinned: true
+    align: center
+    style: "docked"
+    contents:
+      - intro.qmd
+      - me.qmd
+      - ds.qmd
+      - dv.qmd
+      - eda.qmd
+      - arma.qmd
+      - arimax.qmd
+      - ftsm.qmd
+      - href: greenhouse_gases_deep_learning.html
+        text: Deep Learning for TS
+      - conc.qmd
+
+format:
+  html:
+    theme:
+      light: [cosmo, theme.scss]
+    mainfont: "Atkinson Hyperlegible"
+    code-copy: true
+    code-overflow: wrap
+    toc: true
+
+freeze: auto
+
+editor: visual

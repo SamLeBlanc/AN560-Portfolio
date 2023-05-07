@@ -1,0 +1,140 @@
+---
+title: "Exploratory Data Analysis"
+---
+
+## Introduction
+
+For this section of the EDA, we will be focusing specifically on the Sulfur Hexafluoride ($SF_6$). This process was repeated for three other atmospheric concentrations of greenhouse gasses as well, but those have been omitted to allow for an in-depth look at Sulfur Hexafluoride.
+
+Sulfur Hexafluoride is an odorless, colorless, and non-toxic gas. It is mostly used as an electrical insulator, as it has a very high dielectric strength. $SF_6$ also has other uses, such as in the production of integrated circuits and flat panel displays, as a tracer gas in leak detection, and as a propellant in aerosol cans. $SF_6$ is a greenhouse gas, and its global warming potential is estimated to be 23,900 times higher than that of carbon dioxide. As such, SF6 is regulated by the Montreal Protocol and the Kyoto Protocol.
+
+Similar to the other greenhouse gases, Sulfur Hexafluoride is measured continually at many monitoring stations across the globe. Then, NOAA produces a monthly estimate that accounts for additional factors like weather and available monitoring stations. Sulfur Hexafluoride is measured in parts per trillion.
+
+```{r ,echo=FALSE, message=FALSE, warning=FALSE}
+library(flipbookr)
+library(tidyverse)
+library(ggplot2)
+library(forecast)
+library(astsa) 
+library(xts)
+library(tseries)
+library(fpp2)
+library(fma)
+library(lubridate)
+library(tidyverse)
+library(TSstudio)
+library(quantmod)
+library(tidyquant)
+library(plotly)
+library(ggplot2)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+sf6 = read.csv('sf6.csv')
+
+sf6 = read.csv('sf6.csv')
+g = ggplot(sf6, aes(x=decimal, y=average)) +
+  geom_line(color='darkgreen', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly Sulfur Hexafluoride Concentration since 1997',x='Year',y='Sulfur Hexafluoride (ppt)')
+ggplotly(g)
+```
+
+The above plot depicts the alarming rise in the mean monthly concentration of $SF_6$ since 1997, with an increase of nearly threefold in just 25 years. This is a cause of great concern, as $SF_6$ is one of the most potent greenhouse gases released into the atmosphere today. Even though it exists in parts per trillion, this accumulation of $SF_6$ will continue to contribute to the disruption of the planet's climate in conjunction with other greenhouse gases. Undoubtedly, this is a worrisome trend that must be addressed before it is too late.
+
+Based on the above plot, we can see a strongly increasing trend of $SF_6$ that has continued uninterrupted since records began. The trend is very consistent and appears to be almost linear, with just a slight exponential increase detectable. There appear to be only a few months in the 25 years where the $SF_6$ concentration was lower than it was in a previous month. Unlike many other greenhouse gases, the concentration of $SF_6$ does not exhibit strong season variation. Gases like $CO_2$ or $CH_4$ which were discussed previously, see significant change depending on the season and location of the monitoring station, however $SF_6$ does not. Other than that, there appear to be no periodic fluctuations and the level of noise appears to be minimal.
+
+Based only on background knowledge and the above plot, the data appears to be additive rather than multiplicative. One way to know the series is additive is linearity and this plot appears to be nearly linear. Another method is to look at variance, based on this plot, the variance appears to be consistent, pointing to an additive series. These assumptions will be more easy to identify when looking at the decomposition of the series. Examining the individual components of the series can help to confirm whether the data is additive or multiplicative.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+#converting the data into a time series object 
+ts_data <- ts(sf6$average, start=c(1983,7), frequency=12)
+
+#performing the decomposition 
+autoplot(decompose(ts_data)) + labs(title='Decomposition of Sulfur Hexafluoride Concentration', x='Year', y='SF6 (ppt)')
+```
+
+## Decomposition
+
+After decomposing the series, it becomes easier to identify the trend, seasonal, and remainder components. As expected, there is a strong increasing trend that was readily apparent from the initial plot. Additionally, the decomposition process revealed a much subtler seasonal component to this data, which was not easily detected from the initial plot. The seasonal component is highly regular, and appears very similar to the seasonal components of other greenhouse gas concentrations. However, the scale of this seasonal component is miniscule (just 0.01 part per trillion) compared to the increase of the trend, which accounts for an average of 3.5 parts per trillion per year. Similarly, the decomposition reveals that the randomness in the data is very small when compared to the overall trend. This is why the plot appears to be almost linear in nature. It is important to note however, that while randomness may be difficult to detect in the initial plot, it is still an important factor that should be taken into consideration when analyzing the data. Using the decomposition, the series is clearly additive. This is based on the linearly increasing trend as well as the seasonality which does not increase in variance as the series increases.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+SF6_Concentration = ts_data
+ts_lags(SF6_Concentration, lags = c(1:6))
+```
+
+This plot clearly illustrates the strong correlation between the monthly lags for the first 6 months. As expected, the values are highly correlated with their preceding values. Since the series lacks any noticeable seasonality, these lags are even more evident. The lag plots demonstrate that the series has a high degree of autocorrelation, which can be diminished with the use of detrending. By utilizing this technique, we can effectively reduce the influence of autocorrelation and gain a better insight into the data.
+
+## Stationarity
+
+#### SF6 Concentration (No differencing)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# acf(SF6_Concentration, main="ACF: Concentration of SF6")
+# pacf(SF6_Concentration, main="PACF: Concentration of SF6")
+
+SF6_Concentration %>% ggtsdisplay()
+```
+
+The above plots show the ACF and PACF for the Sulfur Hexafluoride concentration time series. As expected, the ACF plot shows a very high degree of correlation between values, indicating that this series is not stationary. This follows the previous hypothesis that the series was not stationary due to the strong trend and weak seasonality. Since the series is not stationary, there are several options available to make it so. One of these options is differencing, where the values are recaluclated by subtracting each from the previous, providing the difference between each pair of values. Other methods include smoothing the data with a moving average or using a Box-Cox transformation to bring the data into a more stationary state. Ultimately, the goal of these transformations is to make the data stationary so that it can be better modeled and better predictions can be made.
+
+#### SF6 Concentration (1st order difference)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+SF6_Concentration %>% diff() %>% ggtsdisplay()
+```
+
+These plots demonstrate the first-order differencing of the time series. After eliminating most of the trend component, the seasonality is much more visible in the ACF plot. It is also worth noting that the magnitude of the bars in the differenced graph is much smaller than that of the initial ACF plot. A closer analysis of the ACF plot reveals that the seasonality remains relatively strong even after one differencing.The seasonal spikes appear every 12, 24 and 36 months, which is the expected result for a monthly series. Even though there is still an obvious pattern in the ACF plot, it is necessary to differentiate the series once again to make it stationary.
+
+#### SF6 Concentration (2nd order difference)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+SF6_Concentration %>% diff() %>% diff() %>% ggtsdisplay()
+```
+
+After taking the difference for the second time, the plots are showing much stronger indications that the series is now stationary. Through it is not perfect, the ACF plot has much less correlation across the range of lag parameters. Although there are still some spikes at 12 and 24 months, taking another difference would not be unreasonable. However, it is important to note that if we over difference the data, it will be much more difficult to detect the signal that we are aiming for. This is evident when we look at the 3rd order difference, where the plot is almost indistinguishable from white noise. As a result, it is critical to be mindful of the order of difference when analyzing time series data.
+
+The Augmented Dickey-Fuller Test (ADF) is a powerful tool for testing for stationarity in a time series. To ensure a comprehensive analysis, the ADF test should be run on the undifferenced, 1st order, and 2nd order difference of the time series. By doing so, we can compare the results and gain a clearer understanding of stationarity. The results of the ADF test are displayed below.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+print(adf.test(SF6_Concentration))
+print(adf.test(SF6_Concentration %>% diff() ))
+print(adf.test(SF6_Concentration %>% diff() %>% diff() ))
+```
+
+The results of the ADF test indicate that both the 1st and 2nd order differences are stationary, while the undifferenced series is not. This matches my hypothesis, with the exception of the first order difference. Inspection of this ACF plot reveals a clear pattern of correlation at 12 and 24 months. I find it quite puzzling that the ADF test believes that this series is stationary despite the spikes in the ACF plot.
+
+## Moving Average Smoothing
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+co2 = read.csv('co2.csv')
+ts_data <- ts(co2$average, start=c(1983,7), frequency=12)
+
+ma3 = stats::filter(ts_data, sides=2, filter=rep(1/3,3))
+ma12 = stats::filter(ts_data, sides=2, filter=rep(1/12,12))
+ma24 = stats::filter(ts_data, sides=2, filter=rep(1/24,24))
+```
+
+We can also consider moving average smoothing to identify underlying patterns in the data. For this example, I will be using the $CO_2$ concentration as it provides a more rich comparison than $SF_6$.
+
+Below are four graphs of the $CO_2$ concentration at various levels of smoothing. The first plot is the raw data with no smoothing applied. The seasonal variation is readily apparent in this plot, but that causes the trend to be obscured. One way we can view the trend more easily (other than decomposing) is to use moving average smoothing.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plot.ts(ts_data, main="CO2 Concentration")
+```
+
+The second graph shows a smoothed moving average of the $CO_2$ concentration with a window that is too small (3 months). Since the concentration follows a 12 month seasonal cycle, the 3 month smoothing only serves to decrease the relative size of the season cycle. While this is a good start to get us to a clear trend line, it is not enough. We will need to apply the smooth moving average with a window that matches the seasonal cycle.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plot.ts(ma3, main="CO2 Concentration (MA3)")
+```
+
+The last two graphs are constructed using smooth moving average windows that are multiples of the seasonal cycle length (12 months). Thus, we can no longer see any seasonal variation because each observation now includes data from all parts of the year equally. We could have achieved the same result by decomposing the series, but this is another option if we know the length of a seasonal cycle. Overall, the 12-month and 24 month windows look very similar, especially since this data has a very steady trend.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plot.ts(ma12, main="CO2 Concentration (MA12)")
+plot.ts(ma24, main="CO2 Concentration (MA24)")
+```

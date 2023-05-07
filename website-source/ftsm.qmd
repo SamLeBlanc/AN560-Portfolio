@@ -1,0 +1,227 @@
+---
+title: "Financial Time Series Models (ARCH/GARCH)"
+---
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+library(TSA)
+library(fGarch) 
+library(FinTS)
+library(dynlm)
+library(tidyverse)
+library(ggplot2)
+library(forecast)
+library(astsa) 
+library(xts)
+library(tseries)
+library(fpp2)
+library(fma)
+library(lubridate)
+library(tidyverse)
+library(TSstudio)
+library(quantmod)
+library(tidyquant)
+library(plotly)
+library(ggplot2)
+
+```
+
+## Background
+
+(Generalized) Autoregressive Conditional Heteroskedasticity (ARCH) and (GARCH) are statistical models used in econometrics, particularly in financial time series analysis. These models are designed to capture the dynamic nature of volatility, a key concept in financial markets that signifies the degree of variation of returns for a given security or market index. Volatility is a significant aspect of financial time series data, reflecting the degree of risk or uncertainty in a market. High volatility indicates a higher degree of risk, as the asset's price can change dramatically in a short time. Thus, accurately modeling and forecasting volatility with ARCH and GARCH models can lead to more informed investment strategies and improved risk assessment.
+
+![](images/garch.png){fig-align="center" width="400"}
+
+ARCH models, introduced by Robert Engle in 1982, describe the variance of the current error term or innovation as a function of the actual sizes of the previous time periods' error terms. In other words, ARCH models capture the phenomenon of "volatility clustering," where periods of high volatility tend to be followed by high volatility, and low by low.
+
+GARCH models, a generalized version of ARCH models, incorporate lagged values of the error variance itself into the model. GARCH models are particularly beneficial when dealing with time series data that exhibits volatility clustering and leverage effects. They can effectively model and forecast time-varying volatility, which is a crucial aspect of financial decision making, risk management, and options pricing.
+
+## Exxon Model Fitting with ARIMA and GARCH
+
+Since my project has exactly nothing to do with financial time series data (which was not a requirement when choosing projects) I will instead focus on a completely random topic because that's what the professor told me to do. As mentioned many times, one of the main greenhouse emitters are energy companies, specifically oil companies. They are terrible and I need not say more. So, let's get the stock data for our favorite company, Exxon! After getting the data, we plot to see what we are working with. Based on the data, it would be wise to take the logarithm since the values are highly skewed from when the stock was doing well and when it was doing poorly.
+
+### Exxon Stock Price
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+XOM = getSymbols("XOM",auto.assign = FALSE, from = "2014-10-01",src="yahoo")
+chartSeries(XOM, theme = chartTheme("white"), 
+            bar.type = "hlc",  
+            up.col = "green",  
+            dn.col = "red")
+
+
+log(XOM$`XOM.Adjusted`) %>% diff() %>% chartSeries()
+
+```
+
+## Stationarity
+
+As with most ARCH/GARCH models, we will be modelling the returns rather than the raw data. This is partly why we took the logarithm, so that the returns are on a more reasonable scale from different time periods of the stock. Plotting the raw data, we can see that this series is clearly not stationary. There is extremely high correlation between values as well as string seasonality present in the data. Thus, to address the non-stationarity, we will need to do differencing. In addition to differencing, we will also need to calculate the logarithm of the data to account for large variations in price that occurred over the time frame of interest. Based on the ACF plot, we can see that after taking the log and differenc of the data, this series is now weakly stationary. There is no need for additional differencing as the ACF and PACF plots are looking good already. Any extra differencing would result in over-differencing and would make modeling more difficult.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+
+xom = ts(XOM$`XOM.Adjusted`, start=decimal_date(as.Date("2014-10-01")), frequency = 365.25)
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+autoplot(xom) +ggtitle("Exxon Price")
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+xom %>% ggtsdisplay()
+```
+
+
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+returns = log(xom) %>% diff()
+returns %>% ggtsdisplay()
+```
+
+## GARCH(p,q) model fitting with ARIMA
+
+### ArchTest
+
+First, we check for ARCH effects with the ArchTest() function. We will use a standard significance level of $\alpha=0.05$ for our null hypothesis test. Because the p-value is much smaller than 0.05, so we reject the null hypothesis and conclude the presence of ARCH(1) effects.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+ArchTest(returns, lags=1, demean=TRUE)
+```
+
+### ARIMA model
+
+Let's fit the ARIMA model first. We follow the same procedure as previously. For more on ARIMA models, check out the other tabs of the website.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+ARIMA.f=function(p1,p2,q1,q2,data){
+  temp=c()
+  i=1
+  temp= data.frame()
+  ls=matrix(rep(NA,6*24),nrow=24)
+  
+  for (p in p1:p2){
+    for(q in q1:q2){
+      if(p+1+q<=8){
+        model= Arima(data,order=c(p,1,q))
+        ls[i,]= c(p,1,q,model$aic,model$bic,model$aicc)
+        i=i+1
+      }
+    }
+  }
+  
+  temp= as.data.frame(ls)
+  names(temp)= c("p","d","q","AIC","BIC","AICc")
+  
+  temp
+}
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+output = ARIMA.f(0,4,0,4,data=log(xom))
+output
+```
+
+### ARIMA(0,1,0)
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+auto.arima(log(xom))
+```
+
+Using the `auto.arima` function, we can see the the best model is the ARIMA(0,1,0). But the ACF and PACF does not suggest these are good values. Since the auto arima function is sometimes un-trsutworthy, I am still going to go with the (0,1,0) ARIMA as determined by the manual arima model selection.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+model_output <- capture.output(Arima(xom, order=c(0,1,0),include.drift = TRUE))
+```
+
+Using the standardized residuals plots, we can see that the ARIMA model is insufficient to accurately model the financial time series data. Thus, we will need to use the GARCH model on top of the residuals from the ARIMA model. This is a common tactic in financial time series which has a much different pattern than other time series like the greenhouse gases for the remainder of the project. Thus, we will continue modeling with the GARCH model. I choice the GARCH values based on the ACF graph, of the ARIMA mode. As we can see from this chart, we should try all p,q values between 0 and 4.
+
+## GARCH model
+
+Next, we will fit the ARIMA model and then fit a GARCH model to the residuals of the ARIMA model.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+data=log(xom)
+
+arima.fit=Arima(data,order=c(0,1,0),include.drift = TRUE)
+arima.res=arima.fit$residuals
+
+acf(arima.res)
+acf(arima.res^2) # clear correlation 1,2,4
+pacf(arima.res^2) # clear correlation 1,4
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+model = list()
+cc = 1
+for (p in 1:4) {
+  for (q in 1:4) {
+    model[[cc]] = garch(arima.res,order=c(q,p),trace=F)
+    cc = cc + 1
+  }
+} 
+
+## get AIC values for model evaluation
+GARCH_AIC = sapply(model, AIC) ## model with lowest AIC is the best
+which(GARCH_AIC == min(GARCH_AIC))
+model[[which(GARCH_AIC == min(GARCH_AIC))]]
+```
+
+After trying all p,q values from 0,4 in combination, the GARCH(1,2) model is the best and has the lowest combination of AIC and BIC models. I tested all of the models, but only included the output from the best one. I attempted to use cross validation but was unsuccessful in making comparisons between the different models.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+summary(garchFit(~garch(1,2), arima.res,trace = F))
+```
+
+Since all the models has similar AIC ,BIC values, I would go with GARCH(1,1) which all the coefficients are significant.
+
+### Final Model
+
+The final model has a decent but not great fir for the Carvana stock return data. All of the errors except for mu are significant but the Ljung-Box statistics are well over the standard threshold. Since there is a mix of indicators, this tells us that the model is decent but not quantifiable better than the simpler ARIMA model. Thus, in this case I would rely on the ARIMA since it is a simpler specification.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+arima.fit=Arima(data,order=c(0,1,0),include.drift = TRUE)
+summary(arima.fit)
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+final.fit = garchFit(~garch(1,2), arima.res,trace = F)
+summary(final.fit)
+```
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+capture.output(final.fit)
+```
+
+Let $x_t$ be the time series data and $z_t$ be the residuals of the ARIMA model. Then the GARCH(1, 2) model is defined by:
+
+$$z_t = \sigma_t * \epsilon_t$$
+
+where $\epsilon_t$ follows a standard normal distribution (mean = 0, sd = 1), and the conditional variance $\sigma_t^2$ is given by:
+
+$$\sigma_t^2 = \omega + \alpha_1 * z_(t-1)^2 + \beta_1 * \sigma_(t-1)^2 + \beta_2 * \sigma_(t-2)^2$$
+
+with the estimated coefficients being:
+
+$\omega$ = 0.00001667 $\alpha_1$ = 0.08827887 $\beta_1$ = 0.37861131 $\beta_2$ = 0.53446470 The model is fitted to the residuals of an ARIMA model (arima.res).
+
+### Forecast
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+predict(final.fit, n.ahead = 100, plot=TRUE)
+```
+
+## Volatality plot
+
+Finally, we should also consider the volatility of the data. Volatility is a key feature of financial time series data and will have large effect on the model we end up choosing. Below is the plot of the volatility of the Carvana data. When looking at the volatility plot, we see several large spikes that stick out. The first is in March 2020, which was right at the beginning of COVID, so the volatility is expected. The second large spike occurs at the send of 2022, which is unexpected because the value of the stock is so low at that point. However, it could be thatwith such a low stock price, relative changes have a greater effect. A \$10 gain when the stock is at \$10 is a 100% increase, but when the stock was at \$400 this would be just a 2.5% gain. So it is not crazy that the stock because much more volatile as they value fell off a cliff in 2022.
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+# ht = final.fit@h.t #a numeric vector with the conditional variances (h.t = sigma.t^delta)
+# 
+# XOM=data.frame(XOM)
+# XOM = data.frame(XOM,rownames(XOM))
+# colnames(XOM)[7] = "date"
+# XOM$date=as.Date(XOM$date,"%Y-%m-%d")
+# str(XOM)
+# 
+# data= data.frame(ht,XOM$date)
+# ggplot(data, aes(y = ht, x = XOM)) + geom_line(col = '#009933') + ylab('Conditional Variance') + xlab('Date')+ggtitle("Volatality plot of Carvana Stock")
+```

@@ -1,0 +1,165 @@
+---
+title: "Data Visualizations"
+---
+
+```{r ,echo=FALSE, message=FALSE, warning=FALSE}
+library(flipbookr)
+library(tidyverse)
+library(ggplot2)
+library(forecast)
+library(astsa) 
+library(xts)
+library(tseries)
+library(fpp2)
+library(fma)
+library(lubridate)
+library(tidyverse)
+library(TSstudio)
+library(quantmod)
+library(tidyquant)
+library(plotly)
+library(ggplot2)
+library(scales)
+```
+
+This project investigates the concentrations of four major greenhouse gases: carbon dioxide ($CO_2$), methane (CH4), nitrous oxide (N2O), and sulfur hexafluoride (SF6). While there are many greenhouse gases, these four are among the most prevalent and damaging to our environment. As mentioned previously, one of the most commonly overlooked yet critical greenhouse gases is water vapor. Unfortunately, I was unable to source water vapor data on the same time scales as the other variables. Since water vapor is left out of many scientific analyses of greenhouse gases, that is also the case with this project.
+
+In this section, the concentrations of the four greenhouse gases are visualized individually and collectively. Data visualizations play a vital role in comprehending the data and informing future modeling decisions, ultimately contributing to a better understanding of our climate and guiding us towards more effective mitigation strategies. This section does not include visualizations of many traditional time-series specific components, like trend and seasonality, since these are included in the EDA and modeling sections.
+
+## $CO_2$: Carbon Dioxide
+
+Carbon dioxide ($CO_2$) is an important and naturally occurring greenhouse gas that plays a vital role in maintaining Earth's temperature by trapping heat from the sun's radiation. This is a natural process that has occurred for billions of years and likely played an important role in the establishment of life on Earth. While a certain amount of $CO_2$ is necessary for life, human activities such as burning fossil fuels, deforestation, and industrial processes have led to a rapid increase in atmospheric $CO_2$ levels. This has intensified the greenhouse effect, resulting in global warming and climate change. For many reasons, CO2 is the most commonly known and studied greenhouse gas. It has become the "boogeyman" of greenhouse gases despite being "less powerful" than many of the others mentioned below.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Read data
+co2 <- read.csv('co2.csv')
+ch4 <- read.csv('ch4.csv')
+n2o <- read.csv('n2o.csv')
+sf6 <- read.csv('sf6.csv')
+
+# CO2 plot
+g1 <- ggplot(co2, aes(x=decimal, y=average)) +
+  geom_line(color='red', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly CO2 Concentration since 1958', x='Year', y='CO2 (ppm)')
+ggplotly(g1)
+```
+
+The measurement of atmospheric carbon dioxide levels and understanding of its role as a greenhouse gas have evolved over time. In the early 1800s century when Joseph Fourier (who also discovered the Fourier series) discovered the greenhouse effect, which explained how Earth's atmosphere traps heat. In the 1850s, John Tyndall identified CO2 as one of the key gases responsible for this phenomenon. However, it wasn't until the 20th century that systematic measurements of atmospheric CO2 levels began. The modern era of CO2 measurement started in the 1950s with Charles David Keeling, an American scientist who pioneered the continuous monitoring of CO2 concentrations. He established the Mauna Loa Observatory in Hawaii, which has been collecting data since 1958. The resulting graph, known as the Keeling Curve, demonstrates the steady increase in atmospheric CO2 levels over time. The graph below plots the data specifically from Mauna Loa, as opposed to the project data from NOAA which is a global average. Despite being a global average, the CO2 levels are based on the Northern Hemisphere season, as that is the source of a majority of greenhouse emissions. The chart below also provides a single year break out to showcase the seasonality.
+
+![](images/co2.png){fig-align="center" width="550" height="500"}
+
+## $CH_4$: Methane
+
+Methane (CH4) is a potent greenhouse gas that, like CO2, contributes significantly to the warming of Earth's atmosphere. Although present in much lower concentrations compared to CO2 (its measured in parts-per-billion instead of parts-per-million), methane is approximately 25 times more effective at trapping heat on a 100-year timescale. It is mainly produced through natural processes, such as wetlands and termites, and human activities, including agriculture, fossil fuel extraction, and waste management.
+
+Due to its shorter atmospheric lifetime (approximately 12 years, compared to 200 years for CO2), methane's impact on climate change is often overlooked compared to CO2. However, reducing methane emissions is crucial for mitigating short-term climate impacts and slowing the rate of global warming. Efforts to address methane emissions complement CO2 reduction strategies, as both gases play essential roles in influencing Earth's climate and require targeted mitigation efforts to ensure a sustainable future for our planet.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# CH4 plot
+g2 <- ggplot(ch4, aes(x=decimal, y=average)) +
+  geom_line(color='blue', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly CH4 Concentration since 1983', x='Year', y='CH4 (ppb)')
+ggplotly(g2)
+```
+
+Analyzing the plot of methane emissions over time, it is evident that there are some distinct differences compared to the CO2 emissions curve. First, the seasonality of methane emissions is less pronounced and less consistent than that of CO2. This is likely due to the fact that methane's sources, such as wetlands and agriculture, are subject to more variable environmental factors that can influence their rates of emission. Additionally, there is a noticeable flattening of the methane curve between 2000 and 2010, which is not present in the CO2 curve.
+
+## $N_2O$: Nitrous Oxide
+
+Nitrous oxide (N2O), also known as laughing gas, is a lesser-known but potent greenhouse gas that contributes to global warming and climate change. Although present in lower concentrations than carbon dioxide (CO2) and methane (CH4), nitrous oxide is approximately 300 times more effective at trapping heat over a 100-year period. It has an atmospheric lifetime of around 114 years, meaning its impact on climate is long-lasting. N2O is generated through both natural processes, such as microbial activity in soils and water bodies, and human activities, including agriculture (fertilizer application), industrial processes, and fossil fuel combustion. In addition to its role as a greenhouse gas, nitrous oxide also contributes to the depletion of the ozone layer.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# N2O plot
+g3 <- ggplot(n2o, aes(x=decimal, y=average)) +
+  geom_line(color='orange', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly N2O Concentration since 2001', x='Year', y='N2O (ppb)')
+ggplotly(g3)
+```
+
+## $SF_6$: Sulpher Hexaflouride
+
+Sulfur hexafluoride (SF6) is an exceptionally potent greenhouse gas with an impressive global warming potential (GWP) of 23,500 over a 100-year timescale. This means that it is significantly more effective at trapping heat in the Earth's atmosphere than carbon dioxide (CO2), despite being present in much lower concentrations. Primarily utilized as an electrical insulator and arc suppressant in high-voltage equipment, SF6 is a synthetic, non-toxic, and inert gas. Its widespread use in the electrical industry, as well as in other applications such as magnesium production, has led to increasing emissions of SF6 into the atmosphere. SF6 stays in the atmosphere for about 3,200 years, its huge GWP means it's crucial to focus on when coming up with strategies to fight climate change.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# SF6 plot
+g4 <- ggplot(sf6, aes(x=decimal, y=average)) +
+  geom_line(color='darkgreen', size=1) +
+  theme_minimal() + 
+  labs(title='Mean Monthly SF6 Concentration since 1997', x='Year', y='SF6 (ppt)')
+ggplotly(g4)
+```
+
+## Comparing Greenhouse Gases
+
+As mentioned before, scientists don't measure these greenhouse gases with the same concentration. Carbon dioxide is measured in parts per million (ppm), methane and nitrous oxide in parts per billion (ppb), and sulfur hexafluoride in parts per trillion (ppt). Also, it's important to remember that just because there's more of one gas doesn't mean it has the same impact on the environment as another. Each gas has its own unique way of interacting with the environment, making their relationship extremely complex and difficutl to model.
+
+To show the different scales of these gases, the graph below changes all concentrations to parts per trillion, so we can clearly see the differences between them. This comparison helps us better understand the relative concentration of each gas and what role it plays in the overall greenhouse effect.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Combined plot
+g_combined <- ggplot() +
+  geom_line(data=co2, aes(x=decimal, y=average*1000000, color='CO2')) +
+  geom_line(data=ch4, aes(x=decimal, y=average*1000, color='CH4')) +
+  geom_line(data=n2o, aes(x=decimal, y=average*1000, color='N2O')) +
+  geom_line(data=sf6, aes(x=decimal, y=average, color='SF6')) +
+  theme_minimal() +
+  scale_color_manual(values=c('red', 'blue', 'orange', 'darkgreen')) +
+  labs(title='Mean Monthly Greenhouse Gas Concentrations since 1958', x='Year', y='Concentration', color='Gas')
+ggplotly(g_combined)
+
+```
+
+## Scaled Concentrations
+
+Although the previous graph effectively illustrates the differences in scales among the greenhouse gases, it may not be the most suitable for time series analysis. To facilitate this, we can rescale the variables so that all of them are on a 0 to 1 scale. This normalization is a common practice in data science to ensure that each variable has an equal opportunity to influence the model outcomes. In this case, we will also limit the data to include only the years for which we have concentration measurements for all four gases, specifically from 2001 to the present. By doing so, we create a consistent dataset for our time series analysis, enabling a more accurate examination of the trends and interactions among these key greenhouse gases over time.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Filter data for 2002 and later
+co2 <- subset(co2, decimal >= 2002)
+ch4 <- subset(ch4, decimal >= 2002)
+n2o <- subset(n2o, decimal >= 2002)
+sf6 <- subset(sf6, decimal >= 2002)
+
+# Scale data using min-max scaler
+co2$average <- rescale(co2$average, to = c(0, 1))
+ch4$average <- rescale(ch4$average, to = c(0, 1))
+n2o$average <- rescale(n2o$average, to = c(0, 1))
+sf6$average <- rescale(sf6$average, to = c(0, 1))
+
+# Combined plot with scaled data
+g_combined_scaled <- ggplot() +
+  geom_line(data=co2, aes(x=decimal, y=average, color='CO2')) +
+  geom_line(data=ch4, aes(x=decimal, y=average, color='CH4')) +
+  geom_line(data=n2o, aes(x=decimal, y=average, color='N2O')) +
+  geom_line(data=sf6, aes(x=decimal, y=average, color='SF6')) +
+  theme_minimal() +
+  scale_color_manual(values=c('red', 'blue', 'orange', 'darkgreen')) +
+  labs(title='Mean Monthly Greenhouse Gas Concentrations since 2002 (Scaled)', x='Year', y='Scaled Concentration', color='Gas')
+ggplotly(g_combined_scaled)
+```
+
+## Scaled Seasonal Variation
+
+Lastly, we can calculate the differences of the normalized variables by subtracting each observation from the previous one. This method allows us to examine the changes between subsequent observations and better understand the seasonal variations in greenhouse gas concentrations. Based on the univariate graphs presented earlier, we expect CO2 to exhibit the most significant seasonal variation. However, to ensure a fair comparison, let's analyze the seasonal patterns using the scaled variables rather than the absolute values previously employed. This approach will provide a clearer insight into the relative variations among the greenhouse gases and help us uncover any underlying trends or patterns in their behavior over time.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Calculate differences between each month's value and the previous month's value
+co2$average_diff <- c(NA, diff(co2$average))
+ch4$average_diff <- c(NA, diff(ch4$average))
+n2o$average_diff <- c(NA, diff(n2o$average))
+sf6$average_diff <- c(NA, diff(sf6$average))
+
+# Combined plot with differences
+g_combined_diff <- ggplot() +
+  geom_line(data=co2, aes(x=decimal, y=average_diff, color='CO2')) +
+  geom_line(data=ch4, aes(x=decimal, y=average_diff, color='CH4')) +
+  geom_line(data=n2o, aes(x=decimal, y=average_diff, color='N2O')) +
+  geom_line(data=sf6, aes(x=decimal, y=average_diff, color='SF6')) +
+  theme_minimal() +
+  scale_color_manual(values=c('red', 'blue', 'orange', 'darkgreen')) +
+  labs(title='Monthly Differences in Greenhouse Gas Concentrations since 1997', x='Year', y='Difference', color='Gas')
+ggplotly(g_combined_diff)
+```

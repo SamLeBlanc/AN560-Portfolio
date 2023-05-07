@@ -1,0 +1,13 @@
+---
+title: "About Me"
+---
+
+## Hello! 😹
+
+My name is Sam LeBlanc and I am an aspiring data scientist with a deep passion for public policy, social justice, and the transformative power of data! Currently, I am one week away from graduating from Georgetown University's McCourt School of Public Policy with a Master's degree in Data Science for Public Policy. My research is focused on the compelling intersection of data science and public policy, with a particular emphasis on issues related to climate and energy.
+
+I believe that data, when interpreted correctly, can reveal insights that drive meaningful social change. One area where this is especially crucial is in our understanding of climate change, and I am particularly interested in the role time series analysis can play in this context. The ability to track and analyze weather data over time, for instance, has vast implications for policy decisions, and I'm eager to contribute to this field.
+
+I am a firm advocate for data literacy. In an era increasingly defined by data, it is imperative that we not only understand how to interpret data, but also how to use it responsibly and effectively to inform discourse and decision-making. This is especially true for data communication inn climate science. This is a field where the top-echelon of researchers are incredibly data fluent, but most people in the green-climate industry are woefully inept at using data to their advantage.
+
+![](images/sam.jpg){fig-align="center" width="136"}
